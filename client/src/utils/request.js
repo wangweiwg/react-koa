@@ -27,7 +27,7 @@ const request = (options) => {
         })
 
         // 根据请求配置对应的参数类型
-        if (options.type === undefined || options.type.toUpperCase() === 'GET') {
+        if (options.method === undefined || options.method.toUpperCase() === 'GET') {
           options.params = options.data;
         }
 
@@ -61,7 +61,7 @@ const request = (options) => {
         
         // 配置实例
         instance(options).then(resolve).catch(error => {
-          message.error(error.message || '请求出错')
+          console.error(error.message || '请求出错')
           reject(error);
         })
     })

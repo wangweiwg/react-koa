@@ -16,6 +16,9 @@ const Login = () => {
     //   navigation('/')
     };
   
+    const handleRegister = () => {
+        navigation('/register')
+    }
     return (
         <div className={style.loginPage}>
             <Form
@@ -36,9 +39,14 @@ const Login = () => {
                 </Form.Item>
         
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" htmlType="submit">
-                        登录
-                    </Button>
+                    <div className={style.btns}>
+                        <Button type="primary" htmlType="submit">
+                            登录
+                        </Button>
+                        <Button type="text" onClick={handleRegister}>
+                            注册
+                        </Button>
+                    </div>
                 </Form.Item>
             </Form>
         </div>

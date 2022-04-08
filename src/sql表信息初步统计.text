@@ -1,7 +1,7 @@
 店铺表 store
 id      自增id
-account
-password
+account         账号
+password        密码
 store_name      店名
 contact         联系人
 phone           联系人电话

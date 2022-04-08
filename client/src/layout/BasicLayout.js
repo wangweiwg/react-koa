@@ -13,19 +13,19 @@ const BaiscLayout = () => {
     return (
         <div className={styles.app}>
         <header className={styles.header}>
-        <img className={styles.logo} src={logo} alt="logo" />
+            <img className={styles.logo} src={logo} alt="logo" />
         </header>
         <footer className={styles.footer}>
-        <Menus />
-        <div className={styles.container}>
-            <Routes>
-            {
-                MenusConfig.map(item => (
-                <Route key={item.path} path={ item.path } element={ item.component } />
-                ))
-            }
-            </Routes>
-        </div>
+            <Menus />
+            <div className={styles.container}>
+                <Routes>
+                {
+                    MenusConfig.map(item => (
+                        <Route key={item.path} path={ item.path } element={ item.component } />
+                    ))
+                }
+                </Routes>
+            </div>
         </footer>
     </div>
     )
