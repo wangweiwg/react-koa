@@ -15,13 +15,13 @@ const request = (options) => {
     
         // 创建实例
         const instance = axios.create({
-          baseURL: '/api',
+          // baseURL: '/api',
           url: `${options.url}`,
           headers: {
             'Content-Type': 'application/json',
           },
           validateStatus(status) {
-            return status < 500;
+            return status <= 500;
           },
           timeout: 3000,
         })
@@ -51,11 +51,15 @@ const request = (options) => {
             message.error('登录已过期');
             window.location.href = '/login';
           }
+          if (status === 500) {
+            message.error(response.data.msg || '服务异常');
+          }
           
           // return { code: status, msg: statusText }
           // return { code: 200, msg: '成功' }
         }, error => {
-          message.error("服务异常");
+          // console.log('error---', error)
+          // message.error("服务异常");
           return Promise.reject(error);
         });
         

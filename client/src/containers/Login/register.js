@@ -1,12 +1,15 @@
 import { Form, Input, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import style from './index.module.scss';
+import { register } from '../../service/index';
 
 const Login = () => {
     const navigation = new useNavigate();
 
     const onFinish = async (values) => {
-      navigation('/login')
+        const res = await register(values);
+        console.log('res---', res);
+        // navigation('/login')
     };
   
     return (

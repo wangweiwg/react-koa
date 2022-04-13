@@ -1,8 +1,10 @@
 const path = require('path');
 const Koa = require('koa');
 const Router = require('koa-router');
+const bodyParser = require('koa-bodyparser');
 const static = require('koa-static');
 const LogMiddleware = require('./middleware/log.middleware');
+const ParamMiddleware = require('./middleware/param.middleware');
 const homeRouter = require('./router/home');
 
 const port = 5000;
@@ -16,8 +18,12 @@ app.use(static(
     path.join( __dirname,  staticPath)
 ))
 
-// logger
+// 中间件
+app.use(bodyParser());
+app.use(ParamMiddleware());
 app.use(LogMiddleware());
+
+
 
 // 装载所有子路由
 router.use(homeRouter.routes(), homeRouter.allowedMethods())
