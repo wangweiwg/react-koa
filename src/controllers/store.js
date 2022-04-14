@@ -2,15 +2,15 @@ const { query } = require('../utils/db.js');
 
 /**
  * 
- * @returns 查询店铺是否存在
+ * @returns 查询店铺信息
  */
-const findStoreIsExist = async (account, phone) => {
-    const sqlStr = `select * from store where account='${account}' or phone='${phone}'`
+const findStore = async (account) => {
+    const sqlStr = `select * from store where account='${account}'`
     const res = await query(sqlStr)
     if (res && res.length > 0) {
-        return true;
+        return res;
     }
-    return false;
+    return null;
 }
 
 /**
@@ -22,6 +22,6 @@ const addStore = async (account, password, storeName, contact, phone, createTime
 }
 
 module.exports = {
-    findStoreIsExist,
+    findStore,
     addStore
 };

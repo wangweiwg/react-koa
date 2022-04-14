@@ -1,21 +1,51 @@
 const Router = require('koa-router');
 const dayjs = require('dayjs');
 const homeRouter = new Router();
-const { findStoreIsExist, addStore } = require('../controllers/store');
+const { findStore, addStore } = require('../controllers/store');
 
 homeRouter.post('/login', async (ctx, next) => {
-    ctx.status = 500
+    const { account, password } = ctx.data
+    // 先查询店铺是否存在
+    const storeInfo = await findStore(account)
+    if (!storeInfo || storeInfo.length == 0) {
+        ctx.status = 500
+        ctx.body = {
+            code: 500,
+            msg: '账号不存在'
+        }
+        return
+    }
+    const [store] = storeInfo
+    if (store.is_forbidden == 1) {
+        ctx.status = 500
+        ctx.body = {
+            code: 500,
+            msg: '账号已禁用'
+        }
+        return
+    }
+    if (store.password !== password) {
+        ctx.status = 500
+        ctx.body = {
+            code: 500,
+            msg: '密码不正确'
+        }
+        return
+    }
+    ctx.status = 200
     // 登录逻辑
     ctx.body = {
-        msg: '用户信息不存在'
+        code: 200,
+        msg: '成功',
+        data: store
     }
 })
 
 homeRouter.post('/register', async (ctx, next) => {
     const { account, password, storeName, contact, phone } = ctx.data
     // 先查询店铺是否存在
-    const isExist = await findStoreIsExist(account, phone)
-    if (isExist) {
+    const storeInfo = await findStore(account)
+    if (storeInfo && storeInfo.length > 0) {
         ctx.status = 500
         ctx.body = {
             code: 500,
