@@ -15,7 +15,7 @@ const request = (options) => {
     
         // 创建实例
         const instance = axios.create({
-          // baseURL: '/api',
+          baseURL: '/api',
           url: `${options.url}`,
           headers: {
             'Content-Type': 'application/json',
@@ -43,9 +43,9 @@ const request = (options) => {
 
         // 响应拦截
         instance.interceptors.response.use(response => {
-          const { status, data, statusText } = response;
+          const { status, data } = response;
           if (status === 200) {
-            return { code: status, data, msg: statusText };
+            return data;
           }
           if (status === 401) {
             message.error('登录已过期');
@@ -54,9 +54,6 @@ const request = (options) => {
           if (status === 500) {
             message.error(response.data.msg || '服务异常');
           }
-          
-          // return { code: status, msg: statusText }
-          // return { code: 200, msg: '成功' }
         }, error => {
           // console.log('error---', error)
           // message.error("服务异常");

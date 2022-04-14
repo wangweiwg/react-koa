@@ -5,6 +5,8 @@ module.exports = () => {
         } else {
             ctx.data = ctx.query;
         }
-        next();
+        if (next) {
+            await next();
+        }
     }
 }

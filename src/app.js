@@ -26,7 +26,7 @@ app.use(LogMiddleware());
 
 
 // 装载所有子路由
-router.use(homeRouter.routes(), homeRouter.allowedMethods())
+router.use('/api', homeRouter.routes(), homeRouter.allowedMethods())
 
 router.all('*', async (ctx) => {
     console.log('任意匹配----')

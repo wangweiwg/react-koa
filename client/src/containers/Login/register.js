@@ -1,4 +1,4 @@
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import style from './index.module.scss';
 import { register } from '../../service/index';
@@ -7,9 +7,12 @@ const Login = () => {
     const navigation = new useNavigate();
 
     const onFinish = async (values) => {
-        const res = await register(values);
-        console.log('res---', res);
-        // navigation('/login')
+        const { code, msg } = await register(values);
+        if (code === 200) {
+            message.success(msg, 1.5, () => {
+                navigation('/login');
+            });   
+        }
     };
   
     return (
